@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hema Sri Kilaru - Portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --brown-bg: #fdf8f6;
+            --brown-light: #f2e8e5;
+            --brown-accent: #8b6f47;
+            --brown-gold: #d4a574;
+            --text-dark: #374151;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--brown-bg), var(--brown-light), #f5e6d3);
+            color: var(--text-dark);
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--brown-accent), var(--brown-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--brown-accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--brown-accent);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--brown-light);
+            z-index: 1001;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--brown-accent), var(--brown-gold));
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero { text-align: center; position: relative; }
+
+        .avatar-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 2rem;
+        }
+
+        .avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--brown-gold);
+            box-shadow: 0 10px 40px rgba(139, 111, 71, 0.3);
+            overflow: hidden;
+            background: linear-gradient(135deg, #e0cec7, #f5e6d3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .avatar-placeholder {
+            font-size: 4rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--brown-accent), var(--brown-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--brown-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .upload-btn:hover { background: var(--brown-gold); transform: scale(1.1); }
+        .upload-btn svg { width: 20px; height: 20px; color: white; }
+        #photoInput { display: none; }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--brown-accent), var(--brown-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #6b7280;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+
+        .social-links { display: flex; gap: 1rem; justify-content: center; }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--brown-accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(139, 111, 71, 0.3);
+        }
+
+        .social-link svg { width: 22px; height: 22px; }
+
+        /* Section Title */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            background: linear-gradient(135deg, var(--brown-accent), var(--brown-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+        }
+
+        /* Cards */
+        .grid { display: grid; gap: 2rem; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 111, 71, 0.15);
+            transition: all 0.3s;
+            border: 2px solid #eaddd7;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 111, 71, 0.25);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon { width: 28px; height: 28px; color: var(--brown-accent); }
+        .card-title { font-size: 1.4rem; font-weight: 600; }
+
+        .education-item { margin-bottom: 1.5rem; }
+        .education-item h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .education-item p { color: #6b7280; }
+        .education-item .meta { font-size: 0.9rem; }
+
+        .achievement-item { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+        .bullet { width: 8px; height: 8px; background: var(--brown-accent); border-radius: 50%; margin-top: 0.5rem; flex-shrink: 0; }
+
+        /* Projects */
+        .project-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 111, 71, 0.15);
+            transition: all 0.3s;
+            border: 2px solid #eaddd7;
+        }
+
+        .project-card:hover { transform: translateY(-5px); }
+
+        .project-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .project-title { font-size: 1.4rem; font-weight: bold; }
+        .project-subtitle { font-size: 0.9rem; color: #6b7280; }
+        .project-description { margin-bottom: 1.5rem; line-height: 1.7; }
+
+        .tag-section { margin-bottom: 1.5rem; }
+        .tag-label { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; display: block; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag {
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            background: #eaddd7;
+            color: var(--brown-accent);
+        }
+        .tag.tech { background: #f5e6d3; color: #5a3d35; }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--brown-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .github-link:hover {
+            background: var(--brown-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.3);
+        }
+
+        .github-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Skills */
+        .skill-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+        .skill-dot { width: 10px; height: 10px; background: linear-gradient(135deg, var(--brown-accent), var(--brown-gold)); border-radius: 50%; }
+
+        .cert-item { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .cert-icon { width: 18px; height: 18px; color: var(--brown-accent); margin-top: 0.25rem; flex-shrink: 0; }
+
+        footer {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { 
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                display: none;
+            }
+            
+            .nav-links.open { display: flex; }
+            .menu-toggle { display: block; }
+            h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            .avatar-container, .avatar { width: 120px; height: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Hema Sri Kilaru</div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a class="active" data-section="home">Home</a></li>
+                <li><a data-section="about">About</a></li>
+                <li><a data-section="projects">Projects</a></li>
+                <li><a data-section="skills">Skills</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="avatar-container">
+                <div class="avatar" id="avatarDisplay">
+                    <span class="avatar-placeholder">H</span>
+                </div>
+                
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                </label>
+                
+            </div>
+            
+            <h1>Hema Sri Kilaru</h1>
+            <p class="subtitle">Full-Stack Developer & AI Enthusiast</p>
+            <p class="description">
+                Computer Science student passionate about building innovative solutions with AI and web technologies. 
+                Focused on creating impactful applications that solve real-world problems.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/Hema-Sri-Chowdary" target="_blank" class="social-link">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/hema-sri-kilaru-c18" target="_blank" class="social-link">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="mailto:kilaruhemasri@gmail.com" class="social-link">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        <h3 class="card-title">Education</h3>
+                    </div>
+                    <div class="education-item">
+                        <h4>B.Tech in Computer Science</h4>
+                        <p>Vellore Institute of Technology-AP</p>
+                        <p class="meta">Sep 2023 - May 2027 | CGPA: 9.1</p>
+                    </div>
+                    <div class="education-item">
+                        <h4>Intermediate (Class XII)</h4>
+                        <p>Vidwan Junior College, Guntur</p>
+                        <p class="meta">June 2021 - March 2023 | 98.2%</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                        <h3 class="card-title">Achievements</h3>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="bullet"></div>
+                        <p>Secured 1st place in NRIIT Hackathon in Data Science domain</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="bullet" style="background: var(--brown-gold);"></div>
+                        <p>Research on hand gesture based recognition</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="bullet"></div>
+                        <p>Member of Technical Department in ACM club VIT-AP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                <div class="project-card">
+                    <div class="project-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                        <div>
+                            <div class="project-title">ES-CHATBOT</div>
+                            <div class="project-subtitle">Employee Support Chatbot</div>
+                        </div>
+                    </div>
+                    <p class="project-description">Web-based employee support chatbot using natural language processing and secure OTP-based authentication.</p>
+                    <div class="tag-section">
+                        <span class="tag-label">Key Features:</span>
+                        <div class="tags">
+                            <span class="tag">NLP Integration</span>
+                            <span class="tag">Secure Authentication</span>
+                            <span class="tag">Image Text Extraction</span>
+                            
+                        </div>
+                    </div>
+                    <div class="tag-section">
+                        <span class="tag-label">Tech Stack:</span>
+                        <div class="tags">
+                            <span class="tag tech">Flask</span>
+                            <span class="tag tech">HTML/CSS</span>
+                            <span class="tag tech">PyOTP</span>
+                            <span class="tag tech">Google Cloud Vision</span>
+    
+                        </div>
+                    </div>
+                    <a href="https://github.com/Hema-Sri-Chowdary/ES-ChatBot" target="_blank" class="github-link">
+                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                        <div>
+                            <div class="project-title">TO-DO List Application</div>
+                            <div class="project-subtitle">Full-Stack MERN App</div>
+                        </div>
+                    </div>
+                    <p class="project-description">Comprehensive task management application with secure authentication and real-time updates.</p>
+                    <div class="tag-section">
+                        <span class="tag-label">Key Features:</span>
+                        <div class="tags">
+                            <span class="tag">JWT Authentication</span>
+                            <span class="tag">RESTful APIs</span>
+                            <span class="tag">Responsive Design</span>
+                        </div>
+                    </div>
+                    <div class="tag-section">
+                        <span class="tag-label">Tech Stack:</span>
+                        <div class="tags">
+                            <span class="tag tech">MongoDB</span>
+                            <span class="tag tech">Express.js</span>
+                            <span class="tag tech">React.js</span>
+                            <span class="tag tech">Node.js</span>
+                        </div>
+                    </div>
+                    <a href="https://github.com/Hema-Sri-Chowdary/TODO-LIST-MERN" target="_blank" class="github-link">
+                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <div>
+                            <div class="project-title">HG-VKEYBOARD</div>
+                            <div class="project-subtitle">Hand-Gesture Virtual Keyboard</div>
+                        </div>
+                    </div>
+                    <p class="project-description">Smart virtual keyboard system using hand gestures for touch-free typing, emojis, and commands. </p>
+                    <div class="tag-section">
+                        <span class="tag-label">Key Features:</span>
+                        <div class="tags">
+                            <span class="tag">Gesture Recognition</span>
+                            <span class="tag">Real-Time Tracking</span>
+                            <span class="tag">Emoji Gestures</span>
+                            <span class="tag">Contactless Input</span>
+                        </div>
+                    </div>
+                    <div class="tag-section">
+                        <span class="tag-label">Tech Stack:</span>
+                        <div class="tags">
+        
+                            <span class="tag tech">OpenCV</span>
+                            <span class="tag tech">Python</span>
+                            <span class="tag tech">Flask</span>
+                            <span class="tag tech">ML Models</span>
+                        </div>
+                    </div>
+                    <a href="https://github.com/yourusername/hg-vkeyboard" target="_blank" class="github-link">
+                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Certifications</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="card-title" style="margin-bottom: 1.5rem;">Technical Skills</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>Python</span></div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>C</span></div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>Java</span></div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>JavaScript</span></div>
+                        </div>
+                        <div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>Flask</span></div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>React.js</span></div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>Node.js</span></div>
+                            <div class="skill-item"><div class="skill-dot"></div><span>MongoDB</span></div>
+                       
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title" style="margin-bottom: 1.5rem;">Certifications</h3>
+                    <div class="cert-item">
+                        <svg class="cert-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                        <span>Microsoft Certified - Azure Data Fudamentals</span>
+                    </div>
+                    <div class="cert-item">
+                        <svg class="cert-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                        <span>Full stack Development with MERN- BLACKBUCK Education</span>
+                    </div>
+                    <div class="cert-item">
+                        <svg class="cert-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                        <span>AWS Academy Graduate - Cloud Architecting - AWS</span>
+                    </div>
+                    <div class="cert-item">
+                        <svg class="cert-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                        <span>Artificial Intelligence Foundation - Infosys Springboard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Let's build something amazing together!</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">© 2025 Hema Sri Kilaru. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Photo Upload
+        document.getElementById('photoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('avatarDisplay').innerHTML = `<img src="${e.target.result}" alt="Profile">`;
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const progress = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        });
+
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('section');
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinksContainer = document.getElementById('navLinks');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const section = link.getAttribute('data-section');
+                document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+                navLinksContainer.classList.remove('open');
+            });
+        });
+
+        menuToggle.addEventListener('click', () => navLinksContainer.classList.toggle('open'));
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (pageYOffset >= section.offsetTop - 150) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === current) link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
